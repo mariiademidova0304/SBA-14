@@ -3,8 +3,11 @@ const router = express.Router();
 const Bookmark = require('../models/Bookmark');
 const authMiddleware = require('../utils/auth');
 
+//to access these routes the user will need to pass authentication
 router.use(authMiddleware);
+//all routes will also include filtering by user's id to only show/edit user accessible posts
 
+//creaeting a bookmark with req.body and user's id
 router.post('/api/bookmarks', async (req, res) => {
     try {
         if (!req.user) {
@@ -21,6 +24,7 @@ router.post('/api/bookmarks', async (req, res) => {
     }
 })
 
+//getting all marks of the user:id
 router.get('/api/bookmarks', async (req, res) => {
     try {
         if (!req.user) {
@@ -33,6 +37,7 @@ router.get('/api/bookmarks', async (req, res) => {
     }
 })
 
+//getting a specific bookmark of the user
 router.get('/api/bookmarks/:id', async (req, res) => {
     try {
         if (!req.user) {
@@ -48,6 +53,7 @@ router.get('/api/bookmarks/:id', async (req, res) => {
     }
 })
 
+//changing a specific bookmark of the user
 router.put('/api/bookmarks/:id', async (req, res) => {
     try {
         if (!req.user) {
@@ -63,6 +69,7 @@ router.put('/api/bookmarks/:id', async (req, res) => {
     }
 })
 
+//deleting a specific bookmark of the user
 router.delete('/api/bookmarks/:id', async (req, res) => {
     try {
         if (!req.user) {

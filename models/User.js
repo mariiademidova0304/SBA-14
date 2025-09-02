@@ -14,6 +14,7 @@ const userSchema = new Schema({
         unique: true,
         match: [/.+@.+\..+/, 'Must use a valid email address'],
     },
+    //made password not-unique in case we use github
     password: {
         type: String,
         minlength: 5,
@@ -24,7 +25,7 @@ const userSchema = new Schema({
     }
 });
 
-//hashing password
+//hashing password, exiting if there's no password
 userSchema.pre('save', async function (next) {
     if (!this.password) {
         next();
@@ -38,7 +39,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-//validating password
+//validating password, exiting if there's no password
 userSchema.methods.isCorrectPassword = async function (password) {
     if (!this.password) {
         return;

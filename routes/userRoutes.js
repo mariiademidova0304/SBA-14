@@ -56,6 +56,7 @@ router.get('/api/users/profile', authMiddleware, (req, res) => {
     res.status(200).json(req.user);
 });
 
+//copied off Bryan's code, not understanding it 100% unfortunately - what's exactly going on here
 router.get('/api/users/auth/github', passport.authenticate('github'));
 router.get('/api/users/auth/github/callback', passport.authenticate('github'), (req, res) => {
     if (!req.user) {
@@ -68,6 +69,8 @@ router.get('/api/users/auth/github/callback', passport.authenticate('github'), (
         email: req.user.email
     };
 
+    //we use req.user to create payload and sign jwt for the user
+    //not sure it's good that we show the token in the query - this probably actually needs some additional security
     const token = jwt.sign({data: payload}, secret, {expiresIn: '2h'});
     res.redirect(`/api/users/profile?token=${token}`);
 

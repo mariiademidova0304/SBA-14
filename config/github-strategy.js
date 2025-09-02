@@ -3,6 +3,7 @@ const User = require('../models/User');
 const { Strategy: GitHubStrategy } = require('passport-github2');
 const passport = require('passport');
 
+//Followed Bryan's code during class for this one
 const options = {
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
