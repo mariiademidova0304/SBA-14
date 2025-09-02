@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
@@ -18,7 +18,10 @@ const userSchema = new Schema({
         type: String,
         minlength: 5,
     },
-    githubId: String
+    githubId: {
+        type: String,
+        unique: true
+    }
 });
 
 //hashing password
@@ -42,3 +45,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
     }
     return bcrypt.compare(password, this.password);
 };
+
+const User = model('User', userSchema);
+module.exports = User;
